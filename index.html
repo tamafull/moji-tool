@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'">
+<title>X(旧Twitter) 文字数チェッカー(重み付き・日本語対応)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.6}
+textarea{width:100%;height:12em;font-size:16px;box-sizing:border-box}
+#counter{font-size:1.4em;margin:8px 0}
+#counter.over{color:#c00;font-weight:bold}
+#highlight{white-space:pre-wrap;word-break:break-all;border:1px solid #ddd;padding:8px}
+#highlight:empty{display:none}
+mark{background:#fbb}
+button{font-size:16px;padding:6px 14px;margin-right:8px}
+small{color:#555}
+</style>
+</head>
+<body>
+<h1>X 文字数チェッカー</h1>
+<p>Xの重み付きルール(日本語等=2、半角英数=1、URL=23、絵文字=2、上限280)で数えます。</p>
+<textarea id="input" aria-label="投稿テキスト" placeholder="ここに投稿文を入力"></textarea>
+<div id="counter" aria-live="polite">重み付き文字数: <span id="weighted">0 / 280</span> (残り <span id="remaining">280</span>)</div>
+<div id="status" role="status"></div>
+<div>通常の文字数(コードポイント): <span id="codepoints">0</span></div>
+<p><button id="copy" type="button">全文コピー</button><button id="clear" type="button">クリア</button></p>
+<div id="highlight" aria-label="超過部分の表示"></div>
+<p><small>プライバシー: 入力内容はこのブラウザ内でのみ処理され、外部へ送信・保存されません。URL・絵文字の判定は簡易実装のため、Xの実際のカウントと差が出る場合があります。</small> <a href="privacy.html">プライバシー表記</a></p>
+<p><small>本ツールはX Corp.とは無関係の非公式ツールです。</small></p>
+<script src="counter.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
