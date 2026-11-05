@@ -41,5 +41,14 @@ test('NFC正規化: か+濁点結合は「が」1文字=2', () => assert.equal(w
 test('通常文字数(コードポイント)併記', () => { const r = analyze('a😀あ'); assert.equal(r.codePoints, 3); assert.equal(r.weighted, 5); });
 test('サロゲートペア漢字はコードポイント1・重み2', () => { const r = analyze('𠮷'); assert.equal(r.codePoints, 1); assert.equal(r.weighted, 2); });
 test('上限は設定で変更可能', () => { const r = analyze('abcdef', { maxWeightedLength: 5 }); assert.equal(r.over, true); assert.equal(r.overflowIndex, 5); });
-test('超過位置: URL途中で超えるとURL先頭', () => assert.equal(analyze('a'.repeat(270) + 'https://example.com').overflowIndex, 270));
+test('超過位置: URL途中で超えるとURL先頭', () => assert.equal(analyze('a'.repeat(270) + ' https://example.com').overflowIndex, 271));
+test('英数字直後のhttps://はURLにならない(公式と同じ)', () => assert.equal(w('a'.repeat(270) + 'https://example.com'), 289));
+test('公式parseTweet突き合わせ済みの値(T-0013)', () => {
+  assert.equal(w('https://example.com/' + 'a'.repeat(100)), 23);
+  assert.equal(w('example.com'), 23);
+  assert.equal(w('見てexample.com'), 4 + 23);
+  assert.equal(w('http://日本語.jp'), 23);
+  assert.equal(w('example.zzzz'), 12);
+  assert.equal(w('foo@example.com'), 15);
+});
 test('1万字でも高速(<100ms)', () => { const t = Date.now(); analyze('あa😀'.repeat(3400)); assert.ok(Date.now() - t < 100); });
