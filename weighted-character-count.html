@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<title>weighted(重み付き)文字数とは?1カウントと2カウントの範囲</title>
+<meta name="description" content="Xの文字数は「重み付き文字数(weightedLength)」で数えます。重み1になるUnicode範囲と、2になる文字の例を、公式設定ファイルと実測値で解説。">
+<link rel="canonical" href="https://counter.lunasummon.com/weighted-character-count.html">
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.7;overflow-wrap:anywhere}
+nav,footer{font-size:.9em;color:#555}
+h1{font-size:1.5em;line-height:1.3}h2{font-size:1.2em;margin-top:1.6em}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.95em}
+th,td{border:1px solid #ccc;padding:4px 8px;text-align:left;vertical-align:top}
+td.n{text-align:right;white-space:nowrap}td.ex{word-break:break-all}
+.note{background:#f6f6f6;border-left:4px solid #999;padding:6px 12px}
+.src li{word-break:break-all}</style>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "半角英数字は何カウント?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "ラテン文字・数字・一般的な記号など、U+0000〜U+10FF の範囲は1カウントです。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "全角の英数字は何カウント?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "全角英数字は上記の範囲外なので2カウントです。半角にすると半分になります。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "重み付き文字数は公式ではどう設定されていますか?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "twitter-text の config/v3.json で、上限280、既定の重み2、重み1の範囲(U+0000-10FF, U+2000-200D, U+2010-201F, U+2032-2037)、URL固定長23が定められています。"
+   }
+  }
+ ]
+}</script>
+</head>
+<body>
+<nav><a href="index.html">X文字数チェッカー(ツール)</a> / <a href="x-character-count-rules.html">Xの文字数ルール解説</a> / <a href="weighted-character-count.html">weighted文字数とは</a> / <a href="x-140-280-characters.html">140字・280字の目安</a> / <a href="x-url-emoji-count.html">URL・絵文字のカウント</a> / <a href="privacy.html">プライバシー表記</a></nav>
+<h1>weighted(重み付き)文字数とは</h1>
+<p>Xは文字数を「重み付き文字数(weightedLength)」で数えます。各文字に重みが付き、その合計が280以下なら投稿できます。公式ライブラリ twitter-text の設定(config/v3.json)では、<strong>重み1の範囲に入る文字だけが1カウント、それ以外はすべて2カウント</strong>です。</p>
+<h2>重み1になる範囲</h2>
+<div class="tw"><table><thead><tr><th>Unicode範囲</th><th>主な文字</th></tr></thead><tbody>
+<tr><td>U+0000〜U+10FF</td><td>ASCII、ラテン拡張、ギリシャ文字、キリル文字、タイ文字など</td></tr>
+<tr><td>U+2000〜U+200D</td><td>各種スペース、ゼロ幅文字</td></tr>
+<tr><td>U+2010〜U+201F</td><td>ハイフン、ダッシュ(—)、引用符(“ ”)など</td></tr>
+<tr><td>U+2032〜U+2037</td><td>プライム記号(′ ″ など)</td></tr>
+</tbody></table></div>
+<p>上記以外(ひらがな・カタカナ・漢字・ハングル・全角記号・半角カナなど)は既定の重み2です。</p>
+<h2>文字別の実測</h2>
+<div class="tw"><table><thead><tr><th>入力</th><th>重み付き文字数</th><th>備考</th></tr></thead><tbody>
+<tr data-t="&quot;A&quot;" data-w="1"><td class="ex">A</td><td class="n">1</td><td>ASCII</td></tr>
+<tr data-t="&quot;é&quot;" data-w="1"><td class="ex">é</td><td class="n">1</td><td>ラテン拡張</td></tr>
+<tr data-t="&quot;Ω&quot;" data-w="1"><td class="ex">Ω</td><td class="n">1</td><td>ギリシャ文字</td></tr>
+<tr data-t="&quot;я&quot;" data-w="1"><td class="ex">я</td><td class="n">1</td><td>キリル文字</td></tr>
+<tr data-t="&quot;ก&quot;" data-w="1"><td class="ex">ก</td><td class="n">1</td><td>タイ文字</td></tr>
+<tr data-t="&quot;¥&quot;" data-w="1"><td class="ex">¥</td><td class="n">1</td><td>円記号(U+00A5)</td></tr>
+<tr data-t="&quot;—&quot;" data-w="1"><td class="ex">—</td><td class="n">1</td><td>ダッシュ(U+2014)は1</td></tr>
+<tr data-t="&quot;“a”&quot;" data-w="3"><td class="ex">“a”</td><td class="n">3</td><td>引用符は1ずつ、aと合わせて3</td></tr>
+<tr data-t="&quot;…&quot;" data-w="2"><td class="ex">…</td><td class="n">2</td><td>三点リーダ(U+2026)は範囲外で2</td></tr>
+<tr data-t="&quot;€&quot;" data-w="2"><td class="ex">€</td><td class="n">2</td><td>ユーロ記号(U+20AC)は範囲外で2</td></tr>
+<tr data-t="&quot;あ&quot;" data-w="2"><td class="ex">あ</td><td class="n">2</td><td>ひらがな</td></tr>
+<tr data-t="&quot;漢&quot;" data-w="2"><td class="ex">漢</td><td class="n">2</td><td>漢字</td></tr>
+<tr data-t="&quot;한&quot;" data-w="2"><td class="ex">한</td><td class="n">2</td><td>ハングル</td></tr>
+<tr data-t="&quot;、。&quot;" data-w="4"><td class="ex">、。</td><td class="n">4</td><td>日本語の句読点は各2</td></tr>
+<tr data-t="&quot;ー&quot;" data-w="2"><td class="ex">ー</td><td class="n">2</td><td>長音記号は2</td></tr>
+<tr data-t="&quot;～&quot;" data-w="2"><td class="ex">～</td><td class="n">2</td><td>全角チルダは2</td></tr>
+</tbody></table></div>
+<p class="note">「…」(三点リーダ)や「—」は見た目が似ていても重みが違います。日本語入力の「…」を多用すると、思ったより文字数を消費します。</p>
+<p>全体のルールは<a href="x-character-count-rules.html">Xの文字数ルール解説</a>、上限の目安は<a href="x-140-280-characters.html">140字・280字の目安</a>にまとめています。実際の入力は<a href="index.html">文字数チェッカー</a>で確認できます。</p>
+<h2>よくある質問</h2>
+<h3>半角英数字は何カウント?</h3>
+<p>ラテン文字・数字・一般的な記号など、U+0000〜U+10FF の範囲は1カウントです。</p>
+<h3>全角の英数字は何カウント?</h3>
+<p>全角英数字は上記の範囲外なので2カウントです。半角にすると半分になります。</p>
+<h3>重み付き文字数は公式ではどう設定されていますか?</h3>
+<p>twitter-text の config/v3.json で、上限280、既定の重み2、重み1の範囲(U+0000-10FF, U+2000-200D, U+2010-201F, U+2032-2037)、URL固定長23が定められています。</p>
+<h2>出典・確認日</h2>
+<ul class="src">
+<li>X Developer Platform「Counting Characters」: <a href="https://docs.x.com/fundamentals/counting-characters" rel="noopener">https://docs.x.com/fundamentals/counting-characters</a>(確認日 2026-11-07)</li>
+<li>twitter-text 設定ファイル config/v3.json: <a href="https://github.com/twitter/twitter-text/blob/master/config/v3.json" rel="noopener">https://github.com/twitter/twitter-text/blob/master/config/v3.json</a></li>
+<li>twitter-text(公式OSS): <a href="https://github.com/twitter/twitter-text" rel="noopener">https://github.com/twitter/twitter-text</a></li>
+</ul>
+<p class="note">本ページの数値例は、このサイトのツール(counter.js)の実出力です。counter.jsは公式 twitter-text 3.1.0 の parseTweet と約3,600件の文例で突き合わせ済みですが、X本番の実装との一致を保証するものではありません。</p>
+<footer><hr><p>X文字数チェッカーは入力内容を外部へ送信しません。広告・アクセス解析・Cookieは使用していません(<a href="privacy.html">プライバシー表記</a>)。本サイトはX Corp.とは無関係の非公式サイトです。</p></footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<title>Xは140字?280字?日本語と英語での文字数の目安</title>
+<meta name="description" content="Xの上限は重み付きで280。日本語だけなら140字、半角英数だけなら280字が目安です。混在・改行・URL・絵文字を含む場合の計算例を実出力つきで紹介。">
+<link rel="canonical" href="https://counter.lunasummon.com/x-140-280-characters.html">
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.7;overflow-wrap:anywhere}
+nav,footer{font-size:.9em;color:#555}
+h1{font-size:1.5em;line-height:1.3}h2{font-size:1.2em;margin-top:1.6em}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.95em}
+th,td{border:1px solid #ccc;padding:4px 8px;text-align:left;vertical-align:top}
+td.n{text-align:right;white-space:nowrap}td.ex{word-break:break-all}
+.note{background:#f6f6f6;border-left:4px solid #999;padding:6px 12px}
+.src li{word-break:break-all}</style>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Xは140字ですか?280字ですか?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "上限は重み付きで280です。日本語だけなら1文字2カウントなので140文字、半角英数字だけなら280文字が目安です。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "日本語と英数字が混ざるとどうなりますか?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "日本語のカウント×2 と 半角英数のカウント×1 の合計が280以内なら投稿できます。例: 日本語100字+半角英数80字でちょうど280です。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "URLを入れると日本語は何文字まで?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "URLは23を使うので、残りは257。半角スペース1を挟むと日本語は128字(256)までです。"
+   }
+  }
+ ]
+}</script>
+</head>
+<body>
+<nav><a href="index.html">X文字数チェッカー(ツール)</a> / <a href="x-character-count-rules.html">Xの文字数ルール解説</a> / <a href="weighted-character-count.html">weighted文字数とは</a> / <a href="x-140-280-characters.html">140字・280字の目安</a> / <a href="x-url-emoji-count.html">URL・絵文字のカウント</a> / <a href="privacy.html">プライバシー表記</a></nav>
+<h1>Xは140字?280字?日本語と英語での目安</h1>
+<p>Xの上限は「重み付き280」です。日本語は1文字2カウントなので、<strong>日本語だけなら140字</strong>、<strong>半角英数字だけなら280字</strong>が目安になります。混在するときは「日本語の字数×2 + 半角の字数×1」が280以下かどうかで判断します。</p>
+<h2>実測した境界値</h2>
+<div class="tw"><table><thead><tr><th>入力</th><th>重み付き文字数</th><th>備考</th></tr></thead><tbody>
+<tr data-t="&quot;ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ&quot;" data-w="280"><td class="ex">あ × 140</td><td class="n">280</td><td>日本語140字 = 280(ちょうど上限)</td></tr>
+<tr data-t="&quot;あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ&quot;" data-w="282"><td class="ex">あ × 141</td><td class="n">282</td><td>日本語141字 = 282(超過)</td></tr>
+<tr data-t="&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;" data-w="280"><td class="ex">a × 280</td><td class="n">280</td><td>半角英数280字 = 280(上限)</td></tr>
+<tr data-t="&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;" data-w="281"><td class="ex">a × 281</td><td class="n">281</td><td>半角英数281字 = 281(超過)</td></tr>
+<tr data-t="&quot;ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;" data-w="280"><td class="ex">あ × 100 + a × 80</td><td class="n">280</td><td>日本語100字+半角80字 = 280</td></tr>
+<tr data-t="&quot;https://example.com ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ&quot;" data-w="280"><td class="ex">URL + 空白 + あ × 128</td><td class="n">280</td><td>URL(23)+スペース(1)+日本語128字(256) = 280</td></tr>
+</tbody></table></div>
+<h2>計算のコツ</h2>
+<ul>
+<li>日本語中心の投稿は「140字」を目安に、改行(1)や半角スペース(1)の分だけ少し余裕を見る</li>
+<li>URLを入れる投稿は、日本語が約128字(URLと空白で24を使う)に減る</li>
+<li>絵文字は1つ2なので、日本語1文字と同じ消費量</li>
+</ul>
+<p class="note">Xの有料プランなどでの長文投稿の上限は、公式ドキュメントのこのページでは扱われておらず、本サイトも対象外です(未確認)。</p>
+<p>ルールの全体像は<a href="x-character-count-rules.html">Xの文字数ルール解説</a>、URLと絵文字は<a href="x-url-emoji-count.html">URL・絵文字のカウント</a>、実際に数えるには<a href="index.html">文字数チェッカー</a>へ。</p>
+<h2>よくある質問</h2>
+<h3>Xは140字ですか?280字ですか?</h3>
+<p>上限は重み付きで280です。日本語だけなら1文字2カウントなので140文字、半角英数字だけなら280文字が目安です。</p>
+<h3>日本語と英数字が混ざるとどうなりますか?</h3>
+<p>日本語のカウント×2 と 半角英数のカウント×1 の合計が280以内なら投稿できます。例: 日本語100字+半角英数80字でちょうど280です。</p>
+<h3>URLを入れると日本語は何文字まで?</h3>
+<p>URLは23を使うので、残りは257。半角スペース1を挟むと日本語は128字(256)までです。</p>
+<h2>出典・確認日</h2>
+<ul class="src">
+<li>X Developer Platform「Counting Characters」: <a href="https://docs.x.com/fundamentals/counting-characters" rel="noopener">https://docs.x.com/fundamentals/counting-characters</a>(確認日 2026-11-07)</li>
+<li>twitter-text 設定ファイル config/v3.json: <a href="https://github.com/twitter/twitter-text/blob/master/config/v3.json" rel="noopener">https://github.com/twitter/twitter-text/blob/master/config/v3.json</a></li>
+<li>twitter-text(公式OSS): <a href="https://github.com/twitter/twitter-text" rel="noopener">https://github.com/twitter/twitter-text</a></li>
+</ul>
+<p class="note">本ページの数値例は、このサイトのツール(counter.js)の実出力です。counter.jsは公式 twitter-text 3.1.0 の parseTweet と約3,600件の文例で突き合わせ済みですが、X本番の実装との一致を保証するものではありません。</p>
+<footer><hr><p>X文字数チェッカーは入力内容を外部へ送信しません。広告・アクセス解析・Cookieは使用していません(<a href="privacy.html">プライバシー表記</a>)。本サイトはX Corp.とは無関係の非公式サイトです。</p></footer>
+</body>
+</html>

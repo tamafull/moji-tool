@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://counter.lunasummon.com/sitemap.xml

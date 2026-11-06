@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'">
 <title>X(旧Twitter) 文字数チェッカー(重み付き・日本語対応)</title>
+<meta name="description" content="Xの投稿文字数を重み付きルール(日本語2・URL23・絵文字2・上限280)で数える無料ツール。入力はブラウザ内で処理され送信されません。">
+<link rel="canonical" href="https://counter.lunasummon.com/">
 <style>
-body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.6}
+body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.6;overflow-wrap:anywhere}
+nav{font-size:.9em;color:#555}
 textarea{width:100%;height:12em;font-size:16px;box-sizing:border-box}
 #counter{font-size:1.4em;margin:8px 0}
 #counter.over{color:#c00;font-weight:bold}
@@ -16,8 +19,26 @@ mark{background:#fbb}
 button{font-size:16px;padding:6px 14px;margin-right:8px}
 small{color:#555}
 </style>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "WebApplication",
+ "name": "X文字数チェッカー",
+ "url": "https://counter.lunasummon.com/",
+ "description": "X(旧Twitter)の投稿を重み付きルール(日本語2、URL23、絵文字2、上限280)で数える、ブラウザ内完結の無料ツール。",
+ "applicationCategory": "UtilitiesApplication",
+ "operatingSystem": "Any (Web browser)",
+ "inLanguage": "ja",
+ "browserRequirements": "Requires JavaScript",
+ "isAccessibleForFree": true,
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "JPY"
+ }
+}</script>
 </head>
 <body>
+<nav><a href="index.html">X文字数チェッカー(ツール)</a> / <a href="x-character-count-rules.html">Xの文字数ルール解説</a> / <a href="weighted-character-count.html">weighted文字数とは</a> / <a href="x-140-280-characters.html">140字・280字の目安</a> / <a href="x-url-emoji-count.html">URL・絵文字のカウント</a> / <a href="privacy.html">プライバシー表記</a></nav>
 <h1>X 文字数チェッカー</h1>
 <p>Xの重み付きルール(日本語等=2、半角英数=1、URL=23、絵文字=2、上限280)で数えます。</p>
 <textarea id="input" aria-label="投稿テキスト" placeholder="ここに投稿文を入力"></textarea>
@@ -26,6 +47,13 @@ small{color:#555}
 <div>通常の文字数(コードポイント): <span id="codepoints">0</span></div>
 <p><button id="copy" type="button">全文コピー</button><button id="clear" type="button">クリア</button></p>
 <div id="highlight" aria-label="超過部分の表示"></div>
+<h2>ルール解説</h2>
+<ul>
+<li><a href="x-character-count-rules.html">Xの文字数ルール解説</a>: 日本語2・URL23・絵文字2の基本</li>
+<li><a href="weighted-character-count.html">weighted文字数とは</a>: 1カウントと2カウントの範囲</li>
+<li><a href="x-140-280-characters.html">140字・280字の目安</a>: 日本語140字・半角280字の目安</li>
+<li><a href="x-url-emoji-count.html">URL・絵文字のカウント</a>: URLと絵文字の数え方</li>
+</ul>
 <p><small>プライバシー: 入力内容はこのブラウザ内でのみ処理され、外部へ送信・保存されません。文字数は公式 twitter-text 3.1.0 と突き合わせた実装ですが、新しい絵文字など一部でXの実際のカウントと差が出る場合があります。</small> <a href="privacy.html">プライバシー表記</a></p>
 <p><small>本ツールはX Corp.とは無関係の非公式ツールです。</small></p>
 <script src="counter.js"></script>

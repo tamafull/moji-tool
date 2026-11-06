@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<title>Xの文字数ルール解説|日本語は2カウント・URLは23・絵文字は2</title>
+<meta name="description" content="X(旧Twitter)の投稿文字数のルールを公式ドキュメントに基づいて解説。日本語は1文字2カウント、URLは長さに関係なく23、絵文字は2。数値例はこのサイトのツールの実出力です。">
+<link rel="canonical" href="https://counter.lunasummon.com/x-character-count-rules.html">
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.7;overflow-wrap:anywhere}
+nav,footer{font-size:.9em;color:#555}
+h1{font-size:1.5em;line-height:1.3}h2{font-size:1.2em;margin-top:1.6em}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.95em}
+th,td{border:1px solid #ccc;padding:4px 8px;text-align:left;vertical-align:top}
+td.n{text-align:right;white-space:nowrap}td.ex{word-break:break-all}
+.note{background:#f6f6f6;border-left:4px solid #999;padding:6px 12px}
+.src li{word-break:break-all}</style>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Xの文字数は日本語だと何文字まで?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "日本語(ひらがな・カタカナ・漢字)は1文字を2カウントで数えるため、日本語だけの投稿は上限280のうち140文字までです。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "URLは何文字として数えますか?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "URLは実際の長さに関係なく23として数えます。"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "絵文字は何文字ですか?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "絵文字は肌色や複数絵文字の結合(ZWJ)を含めて、1つあたり2として数えます。"
+   }
+  }
+ ]
+}</script>
+</head>
+<body>
+<nav><a href="index.html">X文字数チェッカー(ツール)</a> / <a href="x-character-count-rules.html">Xの文字数ルール解説</a> / <a href="weighted-character-count.html">weighted文字数とは</a> / <a href="x-140-280-characters.html">140字・280字の目安</a> / <a href="x-url-emoji-count.html">URL・絵文字のカウント</a> / <a href="privacy.html">プライバシー表記</a></nav>
+<h1>Xの文字数ルール解説(日本語は2・URLは23・絵文字は2)</h1>
+<p>Xの投稿(ポスト)の上限は<strong>280</strong>ですが、すべての文字が1と数えられるわけではありません。日本語などは<strong>1文字=2カウント</strong>、半角英数字は1カウントで、合計(重み付き文字数)が280以内なら投稿できます。<a href="index.html">文字数チェッカー</a>に貼り付けると、この計算を自動で確認できます。</p>
+<h2>基本ルール(公式ドキュメントより)</h2>
+<ul>
+<li>半角英数字・一般的な記号(ラテン文字など): 1カウント → 最大280文字</li>
+<li>日本語・中国語・韓国語(CJK): 2カウント → 最大140文字</li>
+<li>絵文字: 2カウント → 最大140個</li>
+<li>URL: 長さに関係なく23カウント</li>
+<li>その他のUnicode: 既定で2カウント</li>
+</ul>
+<h2>数値例</h2>
+<div class="tw"><table><thead><tr><th>入力</th><th>重み付き文字数</th><th>備考</th></tr></thead><tbody>
+<tr data-t="&quot;abc&quot;" data-w="3"><td class="ex">abc</td><td class="n">3</td><td>半角英数は1ずつ</td></tr>
+<tr data-t="&quot;あいう&quot;" data-w="6"><td class="ex">あいう</td><td class="n">6</td><td>日本語は2ずつ</td></tr>
+<tr data-t="&quot;ｱｲｳ&quot;" data-w="6"><td class="ex">ｱｲｳ</td><td class="n">6</td><td>半角カナは2(全角と同じ)</td></tr>
+<tr data-t="&quot;ＡＢＣ&quot;" data-w="6"><td class="ex">ＡＢＣ</td><td class="n">6</td><td>全角英字は2(半角にすると半分)</td></tr>
+<tr data-t="&quot;Hello, world! 👋&quot;" data-w="16"><td class="ex">Hello, world! 👋</td><td class="n">16</td><td>公式ドキュメントのコード例と同じ値(16)</td></tr>
+<tr data-t="&quot;a\nb&quot;" data-w="3"><td class="ex">a⏎b</td><td class="n">3</td><td>改行は1</td></tr>
+<tr data-t="&quot;https://example.com&quot;" data-w="23"><td class="ex">https://example.com</td><td class="n">23</td><td>URLは23</td></tr>
+<tr data-t="&quot;café&quot;" data-w="4"><td class="ex">café</td><td class="n">4</td><td>NFC正規化後で4(分解形 cafe+結合文字でも4)</td></tr>
+</tbody></table></div>
+<p>詳しい範囲は<a href="weighted-character-count.html">weighted文字数とは</a>、上限の目安は<a href="x-140-280-characters.html">140字・280字の目安</a>、URLと絵文字は<a href="x-url-emoji-count.html">URL・絵文字のカウント</a>を参照してください。</p>
+<h2>数え方の流れ</h2>
+<ol><li>テキストをUnicode正規化(NFC)する</li><li>URLを検出して、それぞれ23として数える</li><li>残りの文字を1つずつ、重み1の範囲なら1、それ以外は2として足す(絵文字は結合した1つ分で2)</li><li>合計が280以下なら投稿可能</li></ol>
+<p class="note">返信の先頭に自動で入る@メンションは数えない、添付メディアは0、といった特例が公式に記載されています。このツールはそれらには対応していません。</p>
+<h2>よくある質問</h2>
+<h3>Xの文字数は日本語だと何文字まで?</h3>
+<p>日本語(ひらがな・カタカナ・漢字)は1文字を2カウントで数えるため、日本語だけの投稿は上限280のうち140文字までです。</p>
+<h3>URLは何文字として数えますか?</h3>
+<p>URLは実際の長さに関係なく23として数えます。</p>
+<h3>絵文字は何文字ですか?</h3>
+<p>絵文字は肌色や複数絵文字の結合(ZWJ)を含めて、1つあたり2として数えます。</p>
+<h2>出典・確認日</h2>
+<ul class="src">
+<li>X Developer Platform「Counting Characters」: <a href="https://docs.x.com/fundamentals/counting-characters" rel="noopener">https://docs.x.com/fundamentals/counting-characters</a>(確認日 2026-11-07)</li>
+<li>twitter-text 設定ファイル config/v3.json: <a href="https://github.com/twitter/twitter-text/blob/master/config/v3.json" rel="noopener">https://github.com/twitter/twitter-text/blob/master/config/v3.json</a></li>
+<li>twitter-text(公式OSS): <a href="https://github.com/twitter/twitter-text" rel="noopener">https://github.com/twitter/twitter-text</a></li>
+</ul>
+<p class="note">本ページの数値例は、このサイトのツール(counter.js)の実出力です。counter.jsは公式 twitter-text 3.1.0 の parseTweet と約3,600件の文例で突き合わせ済みですが、X本番の実装との一致を保証するものではありません。</p>
+<footer><hr><p>X文字数チェッカーは入力内容を外部へ送信しません。広告・アクセス解析・Cookieは使用していません(<a href="privacy.html">プライバシー表記</a>)。本サイトはX Corp.とは無関係の非公式サイトです。</p></footer>
+</body>
+</html>
